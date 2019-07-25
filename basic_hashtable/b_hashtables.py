@@ -17,7 +17,7 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.count = 0
-        self.elements = [None] * capacity
+        self.storage = [None] * capacity
 
 
 # '''
@@ -41,9 +41,9 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     index = hash(key, hash_table.capacity)
     
-    if hash_table.elements[index] is not None:
+    if hash_table.storage[index] is not None:
         print("Warning over writing" + str(hash_table[index]))
-    hash_table.elements[index] = value
+    hash_table.storage[index] = value
 
 # '''
 # Fill this in.
@@ -51,8 +51,11 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
-
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] is None:
+        print('No value at index '+ str(index))
+        return None
+    hash_table.storage[index] = None
 
 # '''
 # Fill this in.
@@ -62,17 +65,18 @@ def hash_table_remove(hash_table, key):
 def hash_table_retrieve(hash_table, key):
     index = hash(key, hash_table.capacity)
 
-    if hash_table.elements[index] is None:
+    if hash_table.storage[index] is None:
         print('No value at index '+ str(index))
-    elif:
-        return str(hash_table.elements[index])
+        return None
+    else:
+        return str(hash_table.storage[index])
 
 
 def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
-
+    
     hash_table_remove(ht, "line")
 
     if hash_table_retrieve(ht, "line") is None:
