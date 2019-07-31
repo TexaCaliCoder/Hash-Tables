@@ -7,6 +7,7 @@ class Pair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
+        self.next = None
 
 
 # '''
@@ -40,10 +41,20 @@ def hash(string, max):
 # '''
 def hash_table_insert(hash_table, key, value):
     index = hash(key, hash_table.capacity)
+
+    current_pair = hash_table.storage[index]
+
+        # searches for the end of the linked list.
+    while current_pair is not None and current_pair.key != key:
+        current_pair = current_pair.next
     
-    if hash_table.storage[index] is not None:
-        print("Warning over writing" + str(hash_table[index]))
-    hash_table.storage[index] = value
+    if current_pair is None:
+        new_pair  = Pair(key, value)
+        new_pair.next = hash_table.storage[index]
+        hash_table.storage[index] = new_pair
+    else:
+        current_pair.value = value
+
 
 # '''
 # Fill this in.
@@ -62,6 +73,8 @@ def hash_table_remove(hash_table, key):
 
 # Should return None if the key is not found.
 # '''
+
+## go through the linked list in order to print the value.
 def hash_table_retrieve(hash_table, key):
     index = hash(key, hash_table.capacity)
 
